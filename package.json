@@ -23,6 +23,7 @@
     "@types/gulp-typescript": "0.0.31",
     "@types/node": "^6.0.38",
     "gulp": "^3.9.1",
+    "gulp-pug": "^3.1.0",
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-typescript": "^2.13.6",
