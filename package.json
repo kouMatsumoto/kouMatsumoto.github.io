@@ -20,6 +20,8 @@
   "devDependencies": {
     "@types/core-js": "^0.9.32",
     "@types/gulp": "^3.8.31",
+    "@types/gulp-sass": "0.0.29",
+    "@types/gulp-sourcemaps": "0.0.29",
     "@types/gulp-typescript": "0.0.31",
     "@types/node": "^6.0.38",
     "gulp": "^3.9.1",
