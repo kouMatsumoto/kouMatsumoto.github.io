@@ -7,5 +7,5 @@ gulp.task('pug', () => {
     .pipe(gulpPug({
       pretty: true
     }))
-    .pipe(gulp.dest('assets'));
+    .pipe(gulp.dest('.'));
 });
