@@ -22,14 +22,13 @@ function _globify(maybeGlob: string, suffix = '**/*') {
 
 
 /** Create a SASS Build Task. */
-export function sassBuildTask(dest: string, root: string, includePaths: string[]) {
-  const sassOptions = { includePaths };
+export function sassBuildTask(destDir: string, srcRootDir: string, sassOptions?) {
 
   return () => {
-    return gulp.src(_globify(root, '**/*.scss'))
+    return gulp.src(_globify(srcRootDir, '**/*.scss'))
       .pipe(gulpSourcemaps.init())
       .pipe(gulpSass(sassOptions).on('error', gulpSass.logError))
       .pipe(gulpSourcemaps.write('.'))
-      .pipe(gulp.dest(dest));
+      .pipe(gulp.dest(destDir));
   };
 }
