@@ -13,3 +13,7 @@ npm-debug.log
 
 # Editor and IDE settings
 .idea
+
+# In develop, ignore compiled files
+/index.html
+/css
