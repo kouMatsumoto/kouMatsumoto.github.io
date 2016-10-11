@@ -10,7 +10,8 @@ import {PROJECT_ROOT, SOURCE_ROOT} from '../constants';
 // This import is lack a type
 const gulpPug = require('gulp-pug');
 
-const pugFilesToBuild = join(SOURCE_ROOT, 'pug/**/*.pug');
+const pugFilesToBuild = join(SOURCE_ROOT, 'pug/index.pug');
+const pugFilesToWatch = join(SOURCE_ROOT, 'pug/**/*.pug');
 const scssFilesToBuild = join(SOURCE_ROOT, 'scss/**/*.scss');
 
 
@@ -26,7 +27,7 @@ gulp.task('build:app', [':build:pug', ':build:scss']);
 
 
 gulp.task('watch:app', () => {
-  gulp.watch(pugFilesToBuild, [':build:pug']);
+  gulp.watch(pugFilesToWatch, [':build:pug']);
   gulp.watch(scssFilesToBuild, [':build:scss']);
 });
 
