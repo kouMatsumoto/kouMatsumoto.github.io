@@ -3,6 +3,7 @@ import * as gulp from 'gulp';
 import * as gulpSass from 'gulp-sass';
 import * as gulpSourcemaps from 'gulp-sourcemaps';
 import * as path from 'path';
+import {PROJECT_ROOT} from './constants';
 
 /** Those imports lack typings */
 const gulpServer = require('gulp-server-livereload');
@@ -41,7 +42,7 @@ export function sassBuildTask(destDir: string, srcRootDir: string, sassOptions?)
 export function serverTask(liveReload: boolean = true,
                            streamCallback: (stream: NodeJS.ReadWriteStream) => void = null) {
   return () => {
-    const stream = gulp.src('')
+    const stream = gulp.src(PROJECT_ROOT)
       .pipe(gulpServer({
         livereload: liveReload,
         fallback: 'index.html',
