@@ -4,6 +4,9 @@ import * as gulpSass from 'gulp-sass';
 import * as gulpSourcemaps from 'gulp-sourcemaps';
 import * as path from 'path';
 
+/** Those imports lack typings */
+const gulpServer = require('gulp-server-livereload');
+
 
 
 /** If the string passed in is a glob, returns it, otherwise append '**\/*' to it. */
@@ -31,4 +34,23 @@ export function sassBuildTask(destDir: string, srcRootDir: string, sassOptions?)
       .pipe(gulpSourcemaps.write('.'))
       .pipe(gulp.dest(destDir));
   };
+}
+
+
+/** Create a task that serves the index.html */
+export function serverTask(liveReload: boolean = true,
+                           streamCallback: (stream: NodeJS.ReadWriteStream) => void = null) {
+  return () => {
+    const stream = gulp.src('')
+      .pipe(gulpServer({
+        livereload: liveReload,
+        fallback: 'index.html',
+        port: 4200
+      }));
+
+    if (streamCallback) {
+      streamCallback(stream);
+    }
+    return stream;
+  }
 }
