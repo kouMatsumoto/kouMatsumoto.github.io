@@ -37,8 +37,15 @@ header {
   }
 }
 
-
 .main-contents-ribbon {
   background-color: $primary-color;
   min-height: 40vh;
+  width: 100%;
+}
+
+.main-contents-body {
+  background-color: #ffffff;
+  margin-top: -35vh;
+  min-width: 300px;
+  min-height: 300px;
 }
