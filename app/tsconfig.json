@@ -8,11 +8,13 @@
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noImplicitAny": false,
+    "outDir": "../dist",
+    "rootDir": ".",
     "sourceMap": true,
     "stripInternal": true,
     "target": "es5",
     "typeRoots": [
-      "./node_modules/@types"
+      "../node_modules/@types"
     ],
     "types": [
       "core-js",
