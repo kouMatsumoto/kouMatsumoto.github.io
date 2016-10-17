@@ -4,7 +4,7 @@ import * as gulpSass from 'gulp-sass';
 import * as gulpSourcemaps from 'gulp-sourcemaps';
 import * as gulpTs from 'gulp-typescript';
 import * as path from 'path';
-import {PROJECT_ROOT} from './constants';
+import {DIST_ROOT, PROJECT_ROOT} from './constants';
 
 /** Those imports lack typings */
 const gulpServer = require('gulp-server-livereload');
@@ -58,7 +58,7 @@ export function tsBuildTask(tsConfigPathOrDir: string) {
 
 
 /** Create a SASS Build Task. */
-export function sassBuildTask(destDir: string, srcRootDir: string, sassOptions?) {
+export function sassBuildTask(srcRootDir: string, destDir: string, sassOptions?) {
 
   return () => {
     return gulp.src(_globify(srcRootDir, '**/*.scss'))
@@ -71,14 +71,19 @@ export function sassBuildTask(destDir: string, srcRootDir: string, sassOptions?)
 
 
 /** Create a task that serves the index.html */
-export function serverTask(liveReload: boolean = true,
-                           streamCallback: (stream: NodeJS.ReadWriteStream) => void = null) {
+export function serverTask(streamCallback: (stream: NodeJS.ReadWriteStream) => void = null) {
   return () => {
     const stream = gulp.src(PROJECT_ROOT)
       .pipe(gulpServer({
-        livereload: liveReload,
+        livereload: {
+          enable: true,
+          filter: (filename, cb) => {
+            cb(/dist/.test(filename));
+          }
+        },
         fallback: 'index.html',
-        port: 4200
+        port: 4200,
+        open: true
       }));
 
     if (streamCallback) {
