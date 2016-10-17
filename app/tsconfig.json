@@ -19,7 +19,8 @@
     "types": [
       "core-js",
       "jasmine",
-      "node"
+      "node",
+      "hammerjs"
     ]
   }
 }

@@ -21,6 +21,7 @@
       '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
       '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
+      '@angular/material': 'npm:@angular/material',
       // other libraries
       'rxjs':                      'npm:rxjs',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
@@ -34,8 +35,17 @@
       rxjs: {
         defaultExtension: 'js'
       },
+      '@angular/material': {
+        format: 'cjs',
+        main: 'material.umd.js'
+      },
       'angular-in-memory-web-api': {
         main: './index.js',
+        defaultExtension: 'js'
+      },
+      // Set the default extension for the root package, because otherwise the demo-app can't
+      // be built within the production mode. Due to missing file extensions.
+      '.': {
         defaultExtension: 'js'
       }
     }
