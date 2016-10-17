@@ -15,5 +15,4 @@ npm-debug.log
 .idea
 
 # In develop, ignore compiled files
-/index.html
-/css
+/dist

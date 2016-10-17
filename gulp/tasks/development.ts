@@ -4,8 +4,8 @@
 
 import * as gulp from 'gulp';
 import {join} from 'path';
-import {sassBuildTask, serverTask} from '../task_helpers';
-import {PROJECT_ROOT, SOURCE_ROOT} from '../constants';
+import {sassBuildTask, serverTask, tsBuildTask} from '../task_helpers';
+import {PROJECT_ROOT, SOURCE_ROOT, APP_ROOT} from '../constants';
 
 // This import is lack a type
 const gulpPug = require('gulp-pug');
@@ -23,7 +23,9 @@ gulp.task(':build:pug', () => {
     .pipe(gulp.dest(PROJECT_ROOT));
 });
 gulp.task(':build:scss', sassBuildTask('css', scssFilesToBuild));
-gulp.task('build:app', [':build:pug', ':build:scss']);
+gulp.task(':build:ts', tsBuildTask(APP_ROOT));
+
+gulp.task('build:app', [':build:ts', ':build:scss']);
 
 
 gulp.task('watch:app', () => {
