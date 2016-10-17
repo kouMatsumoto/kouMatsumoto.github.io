@@ -70,6 +70,16 @@ export function sassBuildTask(srcRootDir: string, destDir: string, sassOptions?)
 }
 
 
+/** Copy files from a glob to a destination. */
+export function copyTask(srcGlobOrDir: string | string[], outRoot: string) {
+  if (typeof srcGlobOrDir === 'string') {
+    return () => gulp.src(_globify(srcGlobOrDir)).pipe(gulp.dest(outRoot));
+  } else {
+    return () => gulp.src(srcGlobOrDir.map(name => _globify(name))).pipe(gulp.dest(outRoot));
+  }
+}
+
+
 /** Create a task that serves the index.html */
 export function serverTask(streamCallback: (stream: NodeJS.ReadWriteStream) => void = null) {
   return () => {
