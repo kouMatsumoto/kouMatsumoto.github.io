@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
+  moduleId: module.id,
   selector: 'my-app',
-  template: `
-    <md-toolbar color="primary">
-      <span>Application Title</span>
-    </md-toolbar>
-  `
+  templateUrl: './app.template.html'
 })
 export class AppComponent {
   title = 'Tour of Heroes';
