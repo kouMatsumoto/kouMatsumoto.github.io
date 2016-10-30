@@ -9,7 +9,7 @@ import {Component} from '@angular/core';
   ]
 })
 export class MyProfileContents {
-  environments = [
+  os = [
     {
       subject: 'Ubuntu',
       text: `I use this to development fundamentally.
@@ -29,4 +29,12 @@ export class MyProfileContents {
       `
     },
   ];
+
+  ide = [
+    {
+      subject: 'WebStorm',
+      text: 'I use this in web development fundamentally.'
+    }
+  ];
 }
+

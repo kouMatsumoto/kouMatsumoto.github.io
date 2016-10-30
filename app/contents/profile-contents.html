@@ -9,17 +9,17 @@
     <h1>Development Environment</h1>
     <md-list>
       <h3 md-subheader>OS</h3>
-      <md-list-item *ngFor="let item of environments">
+      <md-list-item *ngFor="let item of os">
         <h4 md-line>{{item.subject}}</h4>
         <p md-line [innerHTML]="item.text"></p>
       </md-list-item>
       <md-divider></md-divider>
       <h3 md-subheader>Editor and IDE</h3>
-      <md-list-item>
-        <h4 md-line>Windows</h4>
-        <p md-line>windows</p>
-        <p md-line class="demo-2">windows</p>
+      <md-list-item *ngFor="let item of ide">
+        <h4 md-line>{{item.subject}}</h4>
+        <p md-line [innerHTML]="item.text"></p>
       </md-list-item>
+      <md-divider></md-divider>
     </md-list>
   </md-card>
 </div>
