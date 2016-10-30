@@ -1,8 +1,9 @@
 @import '../style/typography';
+@import '../style/variables';
+
 
 h1 {
   @extend .my-text-subheading;
-  ;
 }
 
 .app-content {
