@@ -1,0 +1,24 @@
+@import '../style/typography';
+
+h1 {
+  @extend .my-text-subheading;
+  ;
+}
+
+.app-content {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+md-divider {
+  border-top-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+md-list h3 {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+md-list p {
+  color: rgba(0, 0, 0, 0.54);
+}

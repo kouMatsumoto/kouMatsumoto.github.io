@@ -6,33 +6,7 @@
         Profile
       </template>
       <template md-tab-content>
-        <div class="app-content">
-          <md-card>
-            <h1 class="my-text-subheading">About me</h1>
-            <p class="my-text-body-1">I’m Kou Matsumoto, a 26 year old front-end web engineer from Japan.
-              Now, I’m working as a full-stack web engineer, expert in Angular, Node.js, TypeScript, ES2015.
-              I develop with usually MEAN stack, or occasionally LAMP stack.
-            </p>
-
-            <h1 class="my-text-subheading">Development Environment</h1>
-            <md-list>
-              <h3 md-subheader>OS</h3>
-              <md-list-item *ngFor="let item of environments">
-                <h3 md-line>{{item.subject}}</h3>
-                <p md-line [innerHTML]="item.text" style="white-space: pre-line"></p>
-              </md-list-item>
-              <md-divider></md-divider>
-              <h3 md-subheader>Editor and IDE</h3>
-              <md-list-item>
-                <h3 md-line>Windows</h3>
-                <p md-line>windows</p>
-                <p md-line class="demo-2">windows</p>
-              </md-list-item>
-            </md-list>
-
-
-          </md-card>
-        </div>
+        <my-profile-contents></my-profile-contents>
       </template>
     </md-tab>
     <md-tab>
