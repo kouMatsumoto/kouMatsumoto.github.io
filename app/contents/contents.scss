@@ -2,24 +2,65 @@
 @import '../style/variables';
 
 
+// Contents heading
 h1 {
-  @extend .my-text-subheading;
+  @extend .my-text-headline;
+  margin: 12px 0 8px;
+
+  // No margin-top of first
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
-.app-content {
+// Contents text
+p {
+  @extend .my-text-body-1;
+  color: rgba(0, 0, 0, 0.54);
+  margin-bottom: 12px;
+  padding: 1em;
+}
+
+
+
+.container {
   max-width: 1080px;
   margin: 0 auto;
   padding: 24px;
 }
 
-md-divider {
-  border-top-color: rgba(0, 0, 0, 0.12) !important;
-}
 
-md-list h3 {
-  color: rgba(0, 0, 0, 0.54);
-}
+// override material list styles
+md-list {
+  .md-list-item {
+    margin-bottom: 8px;
+    background: red;
+  }
 
-md-list p {
-  color: rgba(0, 0, 0, 0.54);
+  h3 {
+    @extend .my-text-title;
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  h4 {
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  p:nth-child(2) {
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 12px;
+    line-height: 14px;
+    overflow: initial;
+    padding: 4px 0;
+    white-space: pre-line;
+
+    a {
+      color: inherit;
+    }
+  }
+
+  md-divider {
+    border-top-color: rgba(0, 0, 0, 0.12) !important;
+    margin: 16px 0;
+  }
 }

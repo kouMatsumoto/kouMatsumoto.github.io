@@ -1,7 +1,7 @@
-<div class="app-content">
+<div class="container">
   <md-card>
     <h1>About me</h1>
-    <p class="my-text-body-1">I’m Kou Matsumoto, a 26 year old front-end web engineer from Japan.
+    <p>I’m Kou Matsumoto, a 26 year old front-end web engineer from Japan.
       Now, I’m working as a full-stack web engineer, expert in Angular, Node.js, TypeScript, ES2015.
       I develop with usually MEAN stack, or occasionally LAMP stack.
     </p>
@@ -10,13 +10,13 @@
     <md-list>
       <h3 md-subheader>OS</h3>
       <md-list-item *ngFor="let item of environments">
-        <h3 md-line>{{item.subject}}</h3>
-        <p md-line [innerHTML]="item.text" style="white-space: pre-line"></p>
+        <h4 md-line>{{item.subject}}</h4>
+        <p md-line [innerHTML]="item.text"></p>
       </md-list-item>
       <md-divider></md-divider>
       <h3 md-subheader>Editor and IDE</h3>
       <md-list-item>
-        <h3 md-line>Windows</h3>
+        <h4 md-line>Windows</h4>
         <p md-line>windows</p>
         <p md-line class="demo-2">windows</p>
       </md-list-item>

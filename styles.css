@@ -14,6 +14,12 @@ main {
   min-height: 100vh;
 }
 
+/* override material link color */
+a {
+  color: #9575CD !important;
+}
+
+/* fix inherit bg-color from main */
 .md-tab-header {
   background-color: #ffffff !important;
 }
