@@ -1,8 +1,9 @@
-import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { MaterialModule } from '@angular/material';
+import {NgModule}       from '@angular/core';
+import {BrowserModule}  from '@angular/platform-browser';
+import {MaterialModule} from '@angular/material';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
+import {MyHeader} from './header/index';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { AppComponent } from './app.component';
     MaterialModule.forRoot()
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    MyHeader
   ],
   providers: [],
   bootstrap: [ AppComponent ],
