@@ -1,0 +1,33 @@
+header {
+  box-sizing: border-box;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+// this div is flex container
+div {
+  align-items: center;
+  background: #673ab7 no-repeat;
+  background-size: cover;
+  display: flex;
+  height: 192px;
+  justify-content: flex-start;
+  padding: 16px 24px;
+  width: 100%;
+}
+
+h1 {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0;
+  opacity: 0.92;
+  padding: 0 16px;
+}
+
+img {
+  border-radius: 50%;
+  height: 72px;
+  width: 72px;
+}

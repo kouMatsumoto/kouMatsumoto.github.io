@@ -1,0 +1,73 @@
+@import '../style/typography';
+@import '../style/variables';
+
+
+// Container to set max-width
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+
+article {
+  padding: 32px 0 0;
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  // Contents heading
+  h1 {
+    @extend .my-text-headline;
+    margin: 0 0 20px;
+  }
+
+  // Contents text
+  p {
+    @extend .my-text-body-1;
+    color: rgba(0, 0, 0, 0.54);
+    padding: 0 1em;
+  }
+}
+
+
+.contents-list {
+  padding-left: 8px;
+
+  h3 {
+    @extend .my-text-title;
+    color: rgba(0, 0, 0, 0.54);
+    margin: 0 0 12px;
+    padding: 0;
+  }
+}
+
+.contents-list-item {
+  padding: 8px 0;
+
+  h4 {
+    color: rgba(0, 0, 0, 0.54);
+    margin: 0 0 4px;
+    padding: 0;
+  }
+
+  p {
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 12px;
+    line-height: 16px;
+    overflow: initial;
+    margin: 0;
+    padding: 4px 0;
+    white-space: pre-line;
+
+    a {
+      color: inherit;
+    }
+  }
+}
+
+div.divider {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 16px 0;
+}
