@@ -1,25 +1,23 @@
 <div class="container">
   <md-card>
-    <h1>About me</h1>
-    <p>I’m Kou Matsumoto, a 26 year old front-end web engineer from Japan.
-      Now, I’m working as a full-stack web engineer, expert in Angular, Node.js, TypeScript, ES2015.
-      I develop with usually MEAN stack, or occasionally LAMP stack.
-    </p>
+    <article>
+      <h1>About me</h1>
+      <p>I’m Kou Matsumoto, a 26 year old front-end web engineer from Japan.
+        Now, I’m working as a full-stack web engineer, expert in Angular, Node.js, TypeScript, ES2015.
+        I develop with usually MEAN stack, or occasionally LAMP stack.
+      </p>
+    </article>
 
-    <h1>Development Environment</h1>
-    <md-list>
-      <h3 md-subheader>OS</h3>
-      <md-list-item *ngFor="let item of os">
-        <h4 md-line>{{item.subject}}</h4>
-        <p md-line [innerHTML]="item.text"></p>
-      </md-list-item>
-      <md-divider></md-divider>
-      <h3 md-subheader>Editor and IDE</h3>
-      <md-list-item *ngFor="let item of ide">
-        <h4 md-line>{{item.subject}}</h4>
-        <p md-line [innerHTML]="item.text"></p>
-      </md-list-item>
-      <md-divider></md-divider>
-    </md-list>
+    <article>
+      <h1>Tools</h1>
+      <div *ngFor="let list of itemsForList" class="contents-list">
+        <h3>{{list.head}}</h3>
+        <div class="contents-list-item" *ngFor="let item of list.contents">
+          <h4>{{item.subject}}</h4>
+          <p [innerHTML]="item.text"></p>
+        </div>
+        <div class="divider"></div>
+      </div>
+    </article>
   </md-card>
 </div>
