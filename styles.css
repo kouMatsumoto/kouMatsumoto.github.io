@@ -13,3 +13,7 @@ main {
   background: #ECEFF1;
   min-height: 100vh;
 }
+
+.md-tab-header {
+  background-color: #ffffff !important;
+}
