@@ -1,3 +1,5 @@
+@import '../style/variables';
+
 header {
   box-sizing: border-box;
   display: block;
@@ -6,7 +8,26 @@ header {
 }
 
 // this div is flex container
-div {
+.top {
+  $height: 32px;
+  $padding: 2px;
+  align-items: center;
+  background-color: $my-primary-color-darken;
+  display: flex;
+  height: $height;
+  justify-content: flex-end;
+  padding: $padding $padding * 4;
+  width: 100%;
+
+  img {
+    $size: $height - $padding * 2;
+    height: $size;
+    margin-left: 8px;
+    width: $size;
+  }
+}
+
+.bot {
   align-items: center;
   background: #673ab7 no-repeat;
   background-size: cover;
