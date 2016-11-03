@@ -19,5 +19,5 @@ gulp.task('bundle:app', () => {
     minify: false,
     sourceMaps: false
   })
-    .pipe(gulp.dest(join(PROJECT_ROOT, 'build')));
+    .pipe(gulp.dest(join(PROJECT_ROOT, 'bundles')));
 });
