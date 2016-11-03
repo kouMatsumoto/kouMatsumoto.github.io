@@ -5,6 +5,7 @@ import {MaterialModule} from '@angular/material';
 import {AppComponent} from './app.component';
 import {MyHeader} from './header/index';
 import {MyProfileContents} from './contents/profile-contents';
+import {MyDevelopmentContents} from './contents/development-contents';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {MyProfileContents} from './contents/profile-contents';
   declarations: [
     AppComponent,
     MyHeader,
-    MyProfileContents
+    MyProfileContents,
+    MyDevelopmentContents
   ],
   providers: [],
   bootstrap: [ AppComponent ],
