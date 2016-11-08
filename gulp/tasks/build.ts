@@ -7,17 +7,25 @@ import {join} from 'path';
 import {PROJECT_ROOT, DIST_ROOT} from '../constants';
 
 // lack of types
-const systemjsBuilder = require('gulp-systemjs-builder');
+const systemjsBuilder = require('systemjs-builder');
 
 
 gulp.task('bundle:app', () => {
-  const builder = systemjsBuilder();
-  builder.loadConfigSync(join(PROJECT_ROOT, 'systemjs.config.js'));
-
-  builder.buildStatic(join(DIST_ROOT, 'main.js'), {
+  const builder = new systemjsBuilder(PROJECT_ROOT, 'systemjs.config.js');
+  const src = join(DIST_ROOT, 'main.js');
+  const dest = join(DIST_ROOT, 'bundle.js');
+  const config = {
     mangle: false,
     minify: false,
     sourceMaps: false
-  })
-    .pipe(gulp.dest(join(PROJECT_ROOT, 'bundles')));
+  };
+
+  builder
+    .bundle(src, dest, config)
+    .then(() => {
+      console.log('Build Complete');
+    })
+    .catch((err) => {
+      console.error('Build Failed', err);
+    });
 });
