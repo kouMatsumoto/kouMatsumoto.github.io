@@ -16,3 +16,6 @@ npm-debug.log
 
 # In develop, ignore compiled files
 /dist
+
+# ignore bundled files
+/bundles
