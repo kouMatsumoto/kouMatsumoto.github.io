@@ -4,6 +4,7 @@
 
 import * as gulp from 'gulp';
 import * as gulpConcat from 'gulp-concat';
+import * as gulpUglify from 'gulp-uglify';
 import {join} from 'path';
 import {PROJECT_ROOT, DIST_ROOT} from '../constants';
 
@@ -45,5 +46,6 @@ gulp.task('concat:dependencies', () => {
 
   return gulp.src(esDependencies)
     .pipe(gulpConcat('dependencies.js'))
+    .pipe(gulpUglify())
     .pipe(gulp.dest(DIST_ROOT));
 });
