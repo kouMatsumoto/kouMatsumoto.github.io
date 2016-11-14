@@ -47,7 +47,7 @@ gulp.task('bundle:dependencies', () => {
   ];
 
   return gulp.src(esDependencies)
-    .pipe(gulpConcat('dependencies.js'))
+    .pipe(gulpConcat('dependency.js'))
     .pipe(gulpUglify())
     .pipe(gulp.dest(DIST_ROOT));
 });
