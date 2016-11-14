@@ -36,16 +36,18 @@ gulp.task('bundle:app', () => {
 
 
 /**
- * Concatenate dependency files of ES6 and system.js
+ * Concatenate dependency files of ES6-polyfill, zone.js, reflect, and system.js,
  */
-gulp.task('concat:dependencies', () => {
+gulp.task('bundle:dependencies', () => {
   const esDependencies = [
     join(PROJECT_ROOT, 'node_modules/core-js/client/shim.min.js'),
-    join(PROJECT_ROOT, 'node_modules/systemjs/dist/system.src.js')
+    join(PROJECT_ROOT, 'node_modules/zone.js/dist/zone.js'),
+    join(PROJECT_ROOT, 'node_modules/reflect-metadata/Reflect.js'),
+    join(PROJECT_ROOT, 'node_modules/systemjs/dist/system.src.js'),
   ];
 
   return gulp.src(esDependencies)
-    .pipe(gulpConcat('dependencies.js'))
+    .pipe(gulpConcat('dependency.js'))
     .pipe(gulpUglify())
     .pipe(gulp.dest(DIST_ROOT));
 });
