@@ -48,6 +48,7 @@
     "@types/node": "^6.0.45",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
+    "gulp-inline-ng2-template": "^4.0.0",
     "gulp-pug": "^3.1.0",
     "gulp-sass": "^2.3.2",
     "gulp-server-livereload": "^1.8.4",
