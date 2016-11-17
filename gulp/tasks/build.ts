@@ -12,6 +12,7 @@ import {copyTask, sassBuildTask, tsBuildTask} from '../task_helpers';
 // lack of types
 const systemjsBuilder = require('systemjs-builder');
 const inlineNg2Template= require('gulp-inline-ng2-template');
+const runSequence= require('run-sequence');
 
 
 /**
@@ -48,7 +49,7 @@ gulp.task(':pre:bundle:scss', sassBuildTask(TMP_ROOT, TMP_ROOT));
  * Inject html and css templates to ts as string
  */
 gulp.task(':pre:bundle:template', () => {
-  gulp.src(join(TMP_ROOT, '**/*.ts'))
+  return gulp.src(join(TMP_ROOT, '**/*.ts'))
     .pipe(inlineNg2Template({
       base: 'tmp',
       useRelativePaths: true
@@ -65,7 +66,7 @@ gulp.task(':pre:bundle:ts', tsBuildTask(TMP_ROOT));
 /**
  * bundle for system.js
  */
-gulp.task('bundle:app', () => {
+gulp.task(':pre:bundle:app', () => {
   const builder = new systemjsBuilder(PROJECT_ROOT, 'systemjs.config.js');
   const src = join(DIST_ROOT, 'main.js');
   const dest = join(DIST_ROOT, 'app.js');
@@ -84,3 +85,14 @@ gulp.task('bundle:app', () => {
       console.error('Build Failed', err);
     });
 });
+
+/**
+ * A task to bundle app
+ */
+gulp.task('bundle:app', () => runSequence(
+  ':pre:bundle:copy',
+  ':pre:bundle:scss',
+  ':pre:bundle:template',
+  ':pre:bundle:ts',
+  ':pre:bundle:app'
+));
