@@ -28,15 +28,3 @@ gulp.task('watch:app', () => {
 
 
 gulp.task('serve:app', ['build:app', 'watch:app'], serverTask());
-
-
-gulp.task('build:ng', () => {
-  const inlineNg2Template= require('gulp-inline-ng2-template');
-
-  gulp.src(join(DIST_ROOT, '**/*.js'))
-    .pipe(inlineNg2Template({
-      base: 'dist',
-      useRelativePaths: true
-    }))
-    .pipe(gulp.dest('dist'));
-});
