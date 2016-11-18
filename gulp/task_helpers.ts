@@ -52,7 +52,7 @@ export function tsBuildTask(tsConfigPathOrDir: string) {
     // TODO: Resolve `Unresolved function or method .pipe()`
     return tsProject.src()
       .pipe(gulpSourcemaps.init())
-      .pipe<any>(gulpTs(tsProject))
+      .pipe(gulpTs(tsProject))
       .pipe(gulpSourcemaps.write('.'))
       .pipe(gulp.dest(dest));
   }
@@ -66,7 +66,7 @@ export function sassBuildTask(srcRootDir: string, destDir: string, sassOptions?)
     // TODO: Resolve `Unresolved function or method .pipe()`
     return gulp.src(_globify(srcRootDir, '**/*.scss'))
       .pipe(gulpSourcemaps.init())
-      .pipe<any>(gulpSass(sassOptions).on('error', gulpSass.logError))
+      .pipe(gulpSass(sassOptions).on('error', gulpSass.logError))
       .pipe(gulpSourcemaps.write('.'))
       .pipe(gulp.dest(destDir));
   };
