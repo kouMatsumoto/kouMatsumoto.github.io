@@ -1,10 +1,11 @@
 import * as fs from 'fs';
+import * as del from 'del';
 import * as gulp from 'gulp';
 import * as gulpSass from 'gulp-sass';
 import * as gulpSourcemaps from 'gulp-sourcemaps';
 import * as gulpTs from 'gulp-typescript';
 import * as path from 'path';
-import {DIST_ROOT, PROJECT_ROOT} from './constants';
+import {PROJECT_ROOT} from './constants';
 
 /** Those imports lack typings */
 const gulpServer = require('gulp-server-livereload');
@@ -48,6 +49,7 @@ export function tsBuildTask(tsConfigPathOrDir: string) {
       typescript: require('typescript')
     });
 
+    // TODO: Resolve `Unresolved function or method .pipe()`
     return tsProject.src()
       .pipe(gulpSourcemaps.init())
       .pipe(gulpTs(tsProject))
@@ -61,6 +63,7 @@ export function tsBuildTask(tsConfigPathOrDir: string) {
 export function sassBuildTask(srcRootDir: string, destDir: string, sassOptions?) {
 
   return () => {
+    // TODO: Resolve `Unresolved function or method .pipe()`
     return gulp.src(_globify(srcRootDir, '**/*.scss'))
       .pipe(gulpSourcemaps.init())
       .pipe(gulpSass(sassOptions).on('error', gulpSass.logError))
@@ -80,8 +83,28 @@ export function copyTask(srcGlobOrDir: string | string[], outRoot: string) {
 }
 
 
-/** Create a task that serves the index.html */
-export function serverTask(streamCallback: (stream: NodeJS.ReadWriteStream) => void = null) {
+/**
+ * Create a function for gulp task which deletes directories
+ *
+ * @param pathOrGlob: Path names or glob pattern (if passed path name, it will be converted to glob)
+ */
+export function cleanTask(pathOrGlob: string | string[]) {
+  // convert strings to glob
+  let globified;
+  if (typeof pathOrGlob === 'string') {
+    globified = _globify(pathOrGlob);
+  } else {
+    globified = pathOrGlob.map(name => _globify(name));
+  }
+
+  return () => del.sync(globified);
+}
+
+
+/**
+ * Create a function for gulp task witch serves the index.html
+ */
+export function serverTask(streamCallback: (stream: any) => void = null) {
   return () => {
     const stream = gulp.src(PROJECT_ROOT)
       .pipe(gulpServer({
