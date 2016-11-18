@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import * as del from 'del';
 import * as gulp from 'gulp';
-import * as gulpSass from 'gulp-sass';
 import * as gulpSourcemaps from 'gulp-sourcemaps';
 import * as gulpTs from 'gulp-typescript';
 import * as path from 'path';
@@ -56,20 +55,6 @@ export function tsBuildTask(tsConfigPathOrDir: string) {
       .pipe(gulpSourcemaps.write('.'))
       .pipe(gulp.dest(dest));
   }
-}
-
-
-/** Create a SASS Build Task. */
-export function sassBuildTask(srcRootDir: string, destDir: string, sassOptions?) {
-
-  return () => {
-    // TODO: Resolve `Unresolved function or method .pipe()`
-    return gulp.src(_globify(srcRootDir, '**/*.scss'))
-      .pipe(gulpSourcemaps.init())
-      .pipe(gulpSass(sassOptions).on('error', gulpSass.logError))
-      .pipe(gulpSourcemaps.write('.'))
-      .pipe(gulp.dest(destDir));
-  };
 }
 
 
