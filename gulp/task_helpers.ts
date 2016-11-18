@@ -5,7 +5,7 @@ import * as gulpSass from 'gulp-sass';
 import * as gulpSourcemaps from 'gulp-sourcemaps';
 import * as gulpTs from 'gulp-typescript';
 import * as path from 'path';
-import {DIST_ROOT, PROJECT_ROOT} from './constants';
+import {PROJECT_ROOT} from './constants';
 
 /** Those imports lack typings */
 const gulpServer = require('gulp-server-livereload');
@@ -49,9 +49,10 @@ export function tsBuildTask(tsConfigPathOrDir: string) {
       typescript: require('typescript')
     });
 
+    // TODO: Resolve `Unresolved function or method .pipe()`
     return tsProject.src()
       .pipe(gulpSourcemaps.init())
-      .pipe(gulpTs(tsProject))
+      .pipe<any>(gulpTs(tsProject))
       .pipe(gulpSourcemaps.write('.'))
       .pipe(gulp.dest(dest));
   }
@@ -62,9 +63,10 @@ export function tsBuildTask(tsConfigPathOrDir: string) {
 export function sassBuildTask(srcRootDir: string, destDir: string, sassOptions?) {
 
   return () => {
+    // TODO: Resolve `Unresolved function or method .pipe()`
     return gulp.src(_globify(srcRootDir, '**/*.scss'))
       .pipe(gulpSourcemaps.init())
-      .pipe(gulpSass(sassOptions).on('error', gulpSass.logError))
+      .pipe<any>(gulpSass(sassOptions).on('error', gulpSass.logError))
       .pipe(gulpSourcemaps.write('.'))
       .pipe(gulp.dest(destDir));
   };
