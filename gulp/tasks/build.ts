@@ -7,7 +7,7 @@ import * as gulpConcat from 'gulp-concat';
 import * as gulpUglify from 'gulp-uglify';
 import {join} from 'path';
 import {PROJECT_ROOT, DIST_ROOT, APP_ROOT, TMP_ROOT} from '../constants';
-import {copyTask, sassBuildTask, tsBuildTask} from '../task_helpers';
+import {copyTask, sassBuildTask, tsBuildTask, cleanTask} from '../task_helpers';
 
 // lack of types
 const systemjsBuilder = require('systemjs-builder');
@@ -33,6 +33,10 @@ gulp.task('bundle:dependencies', () => {
     .pipe(gulp.dest(DIST_ROOT));
 });
 
+/**
+ * Before copy, remove files existing
+ */
+gulp.task(':pre:bundle:clean', cleanTask([DIST_ROOT, TMP_ROOT]));
 
 /**
  * A task to prepare bundle app
@@ -47,10 +51,12 @@ gulp.task(':pre:bundle:scss', sassBuildTask(TMP_ROOT, TMP_ROOT));
 
 /**
  * Inject html and css templates to ts as string
+ *
+ * TODO: resolve error of .pipe (Unresolved function or method)
  */
 gulp.task(':pre:bundle:template', () => {
   return gulp.src(join(TMP_ROOT, '**/*.ts'))
-    .pipe(inlineNg2Template({
+    .pipe<any>(inlineNg2Template({
       base: 'tmp',
       useRelativePaths: true
     }))

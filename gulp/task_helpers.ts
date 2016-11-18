@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as del from 'del';
 import * as gulp from 'gulp';
 import * as gulpSass from 'gulp-sass';
 import * as gulpSourcemaps from 'gulp-sourcemaps';
@@ -80,8 +81,28 @@ export function copyTask(srcGlobOrDir: string | string[], outRoot: string) {
 }
 
 
-/** Create a task that serves the index.html */
-export function serverTask(streamCallback: (stream: NodeJS.ReadWriteStream) => void = null) {
+/**
+ * Create a function for gulp task which deletes directories
+ *
+ * @param pathOrGlob: Path names or glob pattern (if passed path name, it will be converted to glob)
+ */
+export function cleanTask(pathOrGlob: string | string[]) {
+  // convert strings to glob
+  let globified;
+  if (typeof pathOrGlob === 'string') {
+    globified = _globify(pathOrGlob);
+  } else {
+    globified = pathOrGlob.map(name => _globify(name));
+  }
+
+  return () => del.sync(globified);
+}
+
+
+/**
+ * Create a function for gulp task witch serves the index.html
+ */
+export function serverTask(streamCallback: (stream: any) => void = null) {
   return () => {
     const stream = gulp.src(PROJECT_ROOT)
       .pipe(gulpServer({
