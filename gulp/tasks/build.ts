@@ -2,6 +2,7 @@
  * The tasks for build, with system.js
  */
 
+import * as del from 'del';
 import * as gulp from 'gulp';
 import * as gulpConcat from 'gulp-concat';
 import * as gulpUglify from 'gulp-uglify';
@@ -12,6 +13,7 @@ import {copyTask, stylusBuildTask, tsBuildTask, cleanTask} from '../task_helpers
 // lack of types
 const systemjsBuilder = require('systemjs-builder');
 const inlineNg2Template= require('gulp-inline-ng2-template');
+const runSequence = require('run-sequence');
 
 
 /**
@@ -88,4 +90,29 @@ gulp.task('bundle:app', [':pre:bundle:ts'], () => {
     .catch((err) => {
       console.error('Build Failed', err);
     });
+});
+
+
+/**
+ * A task for clean unnecessary files after bundle
+ */
+gulp.task(':clean:after-bundle', () => {
+  return del([
+    join(TMP_ROOT, '**/*'),
+    join(DIST_ROOT, '**/*'),
+    '!' + join(DIST_ROOT, 'app.js'),
+    '!' + join(DIST_ROOT, 'dependency.js'),
+  ]);
+});
+
+
+/**
+ * A task of all set-up
+ */
+gulp.task('bundle', () => {
+  runSequence(
+    'bundle:app',
+    'bundle:dependencies',
+    ':clean:after-bundle'
+  );
 });
