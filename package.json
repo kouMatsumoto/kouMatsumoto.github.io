@@ -55,6 +55,7 @@
     "gulp-sass": "^2.3.2",
     "gulp-server-livereload": "^1.8.4",
     "gulp-sourcemaps": "^1.6.0",
+    "gulp-stylus": "^2.6.0",
     "gulp-typescript": "^2.13.6",
     "gulp-uglify": "^2.0.0",
     "run-sequence": "^1.2.2",

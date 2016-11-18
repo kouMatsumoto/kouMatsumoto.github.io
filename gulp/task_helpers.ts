@@ -9,7 +9,7 @@ import {PROJECT_ROOT} from './constants';
 
 /** Those imports lack typings */
 const gulpServer = require('gulp-server-livereload');
-
+const gulpStylus = require('gulp-stylus');
 
 
 /** If the string passed in is a glob, returns it, otherwise append '**\/*' to it. */
@@ -67,6 +67,18 @@ export function sassBuildTask(srcRootDir: string, destDir: string, sassOptions?)
     return gulp.src(_globify(srcRootDir, '**/*.scss'))
       .pipe(gulpSourcemaps.init())
       .pipe(gulpSass(sassOptions).on('error', gulpSass.logError))
+      .pipe(gulpSourcemaps.write('.'))
+      .pipe(gulp.dest(destDir));
+  };
+}
+
+
+/** Create a Stylus Build Task. */
+export function stylusBuildTask(srcRootDir: string, destDir: string, stylusOptions?: {}) {
+  return () => {
+    return gulp.src(_globify(srcRootDir, '**/*.styl'))
+      .pipe(gulpSourcemaps.init())
+      .pipe(gulpStylus(stylusOptions))
       .pipe(gulpSourcemaps.write('.'))
       .pipe(gulp.dest(destDir));
   };

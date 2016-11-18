@@ -1,29 +1,24 @@
 /**
- * The tasks for development, compiling pug, scss
+ * The tasks for development, compiling pug, stylus
  */
 
 import * as gulp from 'gulp';
 import {join} from 'path';
-import {sassBuildTask, serverTask, tsBuildTask, copyTask} from '../task_helpers';
+import {serverTask, tsBuildTask, copyTask, stylusBuildTask} from '../task_helpers';
 import {DIST_ROOT, APP_ROOT} from '../constants';
 
 
-const scssFilesToBuild = join(APP_ROOT, '**/*.scss');
-const tsFilesToWatch = join(APP_ROOT, '**/*.ts');
-const htmlFilesToCopy = join(APP_ROOT, '**/*.html');
 
-
-gulp.task(':build:scss', sassBuildTask(scssFilesToBuild, DIST_ROOT));
+gulp.task(':build:styl', stylusBuildTask(APP_ROOT, DIST_ROOT));
 gulp.task(':build:ts', tsBuildTask(APP_ROOT));
-gulp.task(':copy:html', copyTask(htmlFilesToCopy, DIST_ROOT));
+gulp.task(':copy:html', copyTask(join(APP_ROOT, '**/*.html'), DIST_ROOT));
 
-gulp.task('build:app', [':build:ts', ':build:scss', ':copy:html']);
-
+gulp.task('build:app', [':build:ts', ':build:styl', ':copy:html']);
 
 gulp.task('watch:app', () => {
-  gulp.watch(scssFilesToBuild, [':build:scss']);
-  gulp.watch(tsFilesToWatch, [':build:ts']);
-  gulp.watch(htmlFilesToCopy, [':copy:html']);
+  gulp.watch(join(APP_ROOT, '**/*.styl'), [':build:styl']);
+  gulp.watch(join(APP_ROOT, '**/*.ts'), [':build:ts']);
+  gulp.watch(join(APP_ROOT, '**/*.html'), [':copy:html']);
 });
 
 
