@@ -41,25 +41,25 @@ gulp.task('bundle:dependencies', () => {
 /**
  * Before copy, remove files existing
  */
-gulp.task(':pre:bundle:clean', cleanTask([DIST_ROOT, TMP_ROOT]));
+gulp.task(':clean:pre-copy', cleanTask([DIST_ROOT, TMP_ROOT]));
 
 /**
  * A task to prepare bundle app
  * To alter file contents, copy app files.
  */
-gulp.task(':pre:bundle:copy', [':pre:bundle:clean'], copyTask(APP_ROOT, TMP_ROOT));
+gulp.task(':copy:pre-bundle', [':clean:pre-copy'], copyTask(APP_ROOT, TMP_ROOT));
 
 /**
  * Compile stylus to css to inject as ng2 template
  */
-gulp.task(':pre:bundle:styl', [':pre:bundle:copy'], stylusBuildTask(TMP_ROOT, TMP_ROOT));
+gulp.task(':styl:pre-bundle', [':copy:pre-bundle'], stylusBuildTask(TMP_ROOT, TMP_ROOT));
 
 /**
  * Inject html and css templates to ts as string
  *
  * TODO: resolve error of .pipe (Unresolved function or method)
  */
-gulp.task(':pre:bundle:template', [':pre:bundle:styl'], () => {
+gulp.task(':ng2-template:pre:bundle', [':styl:pre-bundle'], () => {
   return gulp.src(join(TMP_ROOT, '**/*.ts'))
     .pipe<any>(inlineNg2Template({
       base: 'tmp',
@@ -72,7 +72,7 @@ gulp.task(':pre:bundle:template', [':pre:bundle:styl'], () => {
  * Compile ts files injected html and css templates.
  * Without source-map, uglify files.
  */
-gulp.task(':pre:bundle:ts', [':pre:bundle:template'], () => {
+gulp.task(':ts:pre:bundle', [':ng2-template:pre:bundle'], () => {
   const tsConfigPath = join(TMP_ROOT, 'tsconfig.json');
 
   // Start Transpiling with tsconfig
@@ -92,7 +92,7 @@ gulp.task(':pre:bundle:ts', [':pre:bundle:template'], () => {
 /**
  * bundle for system.js
  */
-gulp.task('bundle:app', [':pre:bundle:ts'], () => {
+gulp.task('bundle:app', [':ts:pre:bundle'], () => {
   const builder = new systemjsBuilder(PROJECT_ROOT, 'systemjs.config.js');
   const src = join(DIST_ROOT, 'main.js');
   const dest = join(DIST_ROOT, 'app.js');
@@ -102,16 +102,16 @@ gulp.task('bundle:app', [':pre:bundle:ts'], () => {
     sourceMaps: false
   };
 
-  builder.bundle(src, dest, config)
-    .then(() => gutil.log(gutil.colors.green('Build Complete!')))
-    .catch(e => gutil.log(gutil.colors.green('Build Failed'), e));
+  return builder.bundle(src, dest, config)
+    .then(() => gutil.log(gutil.colors.green('bundle:app Complete!')))
+    .catch(e => gutil.log(gutil.colors.green('bundle:app Failed'), e));
 });
 
 
 /**
  * A task for clean unnecessary files after bundle
  */
-gulp.task(':clean:after-bundle', () => {
+gulp.task(':clean:post-bundle', () => {
   return del([
     join(TMP_ROOT, '**/*'),
     join(DIST_ROOT, '**/*'),
@@ -128,6 +128,6 @@ gulp.task('bundle', () => {
   runSequence(
     'bundle:app',
     'bundle:dependencies',
-    ':clean:after-bundle'
+    ':clean:post-bundle'
   );
 });
