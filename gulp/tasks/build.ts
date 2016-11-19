@@ -6,8 +6,8 @@ import * as del from 'del';
 import * as fs from 'fs';
 import * as gulp from 'gulp';
 import * as gulpConcat from 'gulp-concat';
-import * as gulpUglify from 'gulp-uglify';
 import * as gulpTs from 'gulp-typescript';
+import * as gulpUglify from 'gulp-uglify';
 import * as gutil from 'gulp-util';
 import * as path from 'path';
 const join = path.join;
@@ -97,8 +97,8 @@ gulp.task('bundle:app', [':pre:bundle:ts'], () => {
   const src = join(DIST_ROOT, 'main.js');
   const dest = join(DIST_ROOT, 'app.js');
   const config = {
-    mangle: false,
-    minify: false,
+    mangle: true,
+    minify: true,
     sourceMaps: false
   };
 
