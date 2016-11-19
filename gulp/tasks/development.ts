@@ -25,7 +25,7 @@ gulp.task(':html:development', () => {
 });
 
 
-gulp.task('build:app', [':build:ts', ':build:styl', ':copy:html']);
+gulp.task('build:app', [':html:development', ':build:ts', ':build:styl', ':copy:html']);
 
 gulp.task('watch:app', () => {
   gulp.watch(join(APP_ROOT, '**/*.styl'), [':build:styl']);
