@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import * as del from 'del';
 import * as gulp from 'gulp';
-import * as gulpSass from 'gulp-sass';
 import * as gulpSourcemaps from 'gulp-sourcemaps';
 import * as gulpTs from 'gulp-typescript';
+import * as gutil from 'gulp-util';
 import * as path from 'path';
 import {PROJECT_ROOT} from './constants';
 
@@ -29,20 +29,22 @@ function _globify(maybeGlob: string, suffix = '**/*') {
 
 /** Create a TS Build Task, based on the options */
 export function tsBuildTask(tsConfigPathOrDir: string) {
-  let tsConfigPath;
-  let tsConfigDir;
-
-  // Check Whether tsConfigPathOrDir is directory or path of tsconfig
-  try {
-    fs.accessSync(path.join(tsConfigPathOrDir, 'tsconfig.json'));
-    tsConfigPath = path.join(tsConfigPathOrDir, 'tsconfig.json');
-    tsConfigDir = tsConfigPathOrDir;
-  } catch (e) {
-    tsConfigPath = tsConfigPathOrDir;
-    tsConfigDir = path.dirname(tsConfigPathOrDir);
-  }
-
   return () => {
+    let tsConfigPath: string;
+    let tsConfigDir: string;
+
+    // Check Whether tsConfigPathOrDir is directory or path of tsconfig
+    try {
+      fs.accessSync(path.join(tsConfigPathOrDir, 'tsconfig.json'));
+      tsConfigPath = path.join(tsConfigPathOrDir, 'tsconfig.json');
+      tsConfigDir = tsConfigPathOrDir;
+    } catch (e) {
+      tsConfigPath = tsConfigPathOrDir;
+      tsConfigDir = path.dirname(tsConfigPathOrDir);
+    }
+
+    // Start Transpiling with tsconfig
+    gutil.log(gutil.colors.green(`Start tsc with ${tsConfigPath}`));
     const tsConfig = JSON.parse(fs.readFileSync(tsConfigPath, 'utf-8'));
     const dest = path.join(tsConfigDir, tsConfig['compilerOptions']['outDir']);
     const tsProject = gulpTs.createProject(tsConfigPath, {
@@ -56,20 +58,6 @@ export function tsBuildTask(tsConfigPathOrDir: string) {
       .pipe(gulpSourcemaps.write('.'))
       .pipe(gulp.dest(dest));
   }
-}
-
-
-/** Create a SASS Build Task. */
-export function sassBuildTask(srcRootDir: string, destDir: string, sassOptions?) {
-
-  return () => {
-    // TODO: Resolve `Unresolved function or method .pipe()`
-    return gulp.src(_globify(srcRootDir, '**/*.scss'))
-      .pipe(gulpSourcemaps.init())
-      .pipe(gulpSass(sassOptions).on('error', gulpSass.logError))
-      .pipe(gulpSourcemaps.write('.'))
-      .pipe(gulp.dest(destDir));
-  };
 }
 
 
