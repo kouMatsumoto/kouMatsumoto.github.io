@@ -1,3 +1,3 @@
 import './tasks/default';
 import './tasks/development';
-import './tasks/build';
+import './tasks/production';
