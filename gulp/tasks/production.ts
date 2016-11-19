@@ -6,6 +6,7 @@ import * as del from 'del';
 import * as fs from 'fs';
 import * as gulp from 'gulp';
 import * as gulpConcat from 'gulp-concat';
+import * as gulpRename from 'gulp-rename';
 import * as gulpTs from 'gulp-typescript';
 import * as gulpUglify from 'gulp-uglify';
 import * as gutil from 'gulp-util';
@@ -118,6 +119,16 @@ gulp.task(':clean:post-bundle', () => {
     '!' + join(DIST_ROOT, 'app.js'),
     '!' + join(DIST_ROOT, 'dependency.js'),
   ]);
+});
+
+
+/**
+ * Copy production.index.html to PROJECT_ROOT as index.html
+ */
+gulp.task(':html:production', () => {
+  return gulp.src(join(APP_ROOT, 'production.index.html'))
+    .pipe(gulpRename('index.html'))
+    .pipe(gulp.dest(PROJECT_ROOT));
 });
 
 
