@@ -12,7 +12,7 @@ import * as gutil from 'gulp-util';
 import * as path from 'path';
 const join = path.join;
 import {PROJECT_ROOT, DIST_ROOT, APP_ROOT, TMP_ROOT} from '../constants';
-import {copyTask, stylusBuildTask, tsBuildTask, cleanTask} from '../task_helpers';
+import {copyTask, stylusBuildTask, cleanTask} from '../task_helpers';
 
 // lack of types
 const systemjsBuilder = require('systemjs-builder');
@@ -103,12 +103,8 @@ gulp.task('bundle:app', [':pre:bundle:ts'], () => {
   };
 
   builder.bundle(src, dest, config)
-    .then(() => {
-      console.log('Build Complete');
-    })
-    .catch((err) => {
-      console.error('Build Failed', err);
-    });
+    .then(() => gutil.log(gutil.colors.green('Build Complete!')))
+    .catch(e => gutil.log(gutil.colors.green('Build Failed'), e));
 });
 
 
