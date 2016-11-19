@@ -3,10 +3,14 @@
  */
 
 import * as del from 'del';
+import * as fs from 'fs';
 import * as gulp from 'gulp';
 import * as gulpConcat from 'gulp-concat';
 import * as gulpUglify from 'gulp-uglify';
-import {join} from 'path';
+import * as gulpTs from 'gulp-typescript';
+import * as gutil from 'gulp-util';
+import * as path from 'path';
+const join = path.join;
 import {PROJECT_ROOT, DIST_ROOT, APP_ROOT, TMP_ROOT} from '../constants';
 import {copyTask, stylusBuildTask, tsBuildTask, cleanTask} from '../task_helpers';
 
@@ -65,9 +69,24 @@ gulp.task(':pre:bundle:template', [':pre:bundle:styl'], () => {
 });
 
 /**
- * Compile ts files injected html and css templates
+ * Compile ts files injected html and css templates.
+ * Without source-map, uglify files.
  */
-gulp.task(':pre:bundle:ts', [':pre:bundle:template'], tsBuildTask(TMP_ROOT));
+gulp.task(':pre:bundle:ts', [':pre:bundle:template'], () => {
+  const tsConfigPath = join(TMP_ROOT, 'tsconfig.json');
+
+  // Start Transpiling with tsconfig
+  gutil.log(gutil.colors.green(`Start tsc with ${tsConfigPath}`));
+  const tsConfig = JSON.parse(fs.readFileSync(tsConfigPath, 'utf-8'));
+  const dest = join(path.dirname(tsConfigPath), tsConfig['compilerOptions']['outDir']);
+  const tsProject = gulpTs.createProject(tsConfigPath, {
+    typescript: require('typescript')
+  });
+
+  return tsProject.src()
+    .pipe(gulpTs(tsProject))
+    .pipe(gulp.dest(dest));
+});
 
 
 /**
