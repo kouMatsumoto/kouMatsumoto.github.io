@@ -21,3 +21,11 @@ npm-debug.log
 /bundles
 /tmp
 /index.html
+
+# For publishing github page
+!/dist
+!/index.html
+/app
+/gulp
+/gulpfile.js
+/systemjs.config.js
