@@ -1,5 +1,5 @@
 /**
- * The tasks for build, with system.js
+ * The tasks for production build of system.js
  */
 
 import * as del from 'del';
@@ -16,9 +16,31 @@ import {PROJECT_ROOT, DIST_ROOT, APP_ROOT, TMP_ROOT} from '../constants';
 import {copyTask, stylusBuildTask, cleanTask} from '../task_helpers';
 
 // lack of types
-const systemjsBuilder = require('systemjs-builder');
 const inlineNg2Template= require('gulp-inline-ng2-template');
+const gulpCleanCss= require('gulp-clean-css');
 const runSequence = require('run-sequence');
+const systemjsBuilder = require('systemjs-builder');
+
+
+
+/**
+ * Concatenate CSS files as production style.css.
+ * Files to bundle are link tag src in development.index.html.
+ *
+ * Caution: This task is assuming that stylus files has been compiled in TMP_ROOT.
+ * (This task will be executed in `bundle` task as dependency after `bundle:app`)
+ */
+gulp.task(':bundle:css', () => {
+  const files = [
+    join(PROJECT_ROOT, 'node_modules/@angular/material/core/theming/prebuilt/deeppurple-amber.css'),
+    join(TMP_ROOT, 'style/global.css')
+  ];
+
+  return gulp.src(files)
+    .pipe(gulpConcat('style.css'))
+    .pipe(gulpCleanCss())
+    .pipe(gulp.dest(DIST_ROOT));
+});
 
 
 /**
@@ -39,21 +61,25 @@ gulp.task('bundle:dependencies', () => {
     .pipe(gulp.dest(DIST_ROOT));
 });
 
+
 /**
  * Before copy, remove files existing
  */
-gulp.task(':clean:pre-copy', cleanTask([DIST_ROOT, TMP_ROOT]));
+gulp.task(':clean:pre-bundle', cleanTask([DIST_ROOT, TMP_ROOT]));
+
 
 /**
  * A task to prepare bundle app
  * To alter file contents, copy app files.
  */
-gulp.task(':copy:pre-bundle', [':clean:pre-copy'], copyTask(APP_ROOT, TMP_ROOT));
+gulp.task(':copy:pre-bundle', copyTask(APP_ROOT, TMP_ROOT));
+
 
 /**
  * Compile stylus to css to inject as ng2 template
  */
 gulp.task(':styl:pre-bundle', [':copy:pre-bundle'], stylusBuildTask(TMP_ROOT, TMP_ROOT));
+
 
 /**
  * Inject html and css templates to ts as string
@@ -68,6 +94,7 @@ gulp.task(':ng2-template:pre:bundle', [':styl:pre-bundle'], () => {
     }))
     .pipe(gulp.dest(TMP_ROOT));
 });
+
 
 /**
  * Compile ts files injected html and css templates.
@@ -118,6 +145,7 @@ gulp.task(':clean:post-bundle', () => {
     join(DIST_ROOT, '**/*'),
     '!' + join(DIST_ROOT, 'app.js'),
     '!' + join(DIST_ROOT, 'dependency.js'),
+    '!' + join(DIST_ROOT, 'style.css')
   ]);
 });
 
@@ -137,8 +165,11 @@ gulp.task(':html:production', () => {
  */
 gulp.task('bundle', () => {
   runSequence(
+    ':clean:pre-bundle',
     'bundle:app',
     'bundle:dependencies',
+    ':html:production',
+    ':bundle:css',
     ':clean:post-bundle'
   );
 });
