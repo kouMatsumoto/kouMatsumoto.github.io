@@ -1,0 +1,54 @@
+@import '../style/_variables';
+
+header {
+  box-sizing: border-box;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+// this div is flex container
+.top {
+  $height = 32px;
+  $padding = 2px;
+  align-items: center;
+  background-color: $my-primary-color-darken;
+  display: flex;
+  height: $height;
+  justify-content: flex-end;
+  padding: $padding $padding * 4;
+  width: 100%;
+
+  img {
+    $size = $height - $padding * 2;
+    height: $size;
+    margin-left: 8px;
+    width: $size;
+  }
+}
+
+.bot {
+  align-items: center;
+  background: #673ab7 no-repeat;
+  background-size: cover;
+  display: flex;
+  height: 192px;
+  justify-content: flex-start;
+  padding: 16px 24px;
+  width: 100%;
+}
+
+h1 {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0;
+  opacity: 0.92;
+  padding: 0 16px;
+}
+
+img {
+  border-radius: 50%;
+  height: 72px;
+  width: 72px;
+}

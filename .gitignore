@@ -13,3 +13,19 @@ npm-debug.log
 
 # Editor and IDE settings
 .idea
+
+# In develop, ignore compiled files
+/dist
+
+# Files in development
+/bundles
+/tmp
+/index.html
+
+# For publishing github page
+!/dist
+!/index.html
+/app
+/gulp
+/gulpfile.js
+/systemjs.config.js
