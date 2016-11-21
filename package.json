@@ -4,7 +4,8 @@
   "description": "About kouMatsumoto web developer",
   "main": "main.js",
   "scripts": {
-    "start": ""
+    "start": "",
+    "production-build": "gulp bundle"
   },
   "repository": {
     "type": "git",

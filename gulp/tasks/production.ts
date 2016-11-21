@@ -25,7 +25,7 @@ const systemjsBuilder = require('systemjs-builder');
 
 /**
  * Concatenate CSS files as production style.css.
- * Files to bundle are link tag src in development.index.html.
+ * Files to be bundled are of link href of development.index.html.
  *
  * Caution: This task is assuming that stylus files has been compiled in TMP_ROOT.
  * (This task will be executed in `bundle` task as dependency after `bundle:app`)
@@ -44,9 +44,10 @@ gulp.task(':bundle:css', () => {
 
 
 /**
- * Concatenate dependency files of ES6-polyfill, zone.js, reflect, and system.js,
+ * Concatenate js files such as ES6-polyfill, zone.js, reflect, and system.js.
+ * Files to be bundled are of script src of development.index.html.
  */
-gulp.task('bundle:dependencies', () => {
+gulp.task(':bundle:dependencies', () => {
   const esDependencies = [
     join(PROJECT_ROOT, 'node_modules/core-js/client/shim.min.js'),
     join(PROJECT_ROOT, 'node_modules/zone.js/dist/zone.js'),
@@ -86,7 +87,7 @@ gulp.task(':styl:pre-bundle', [':copy:pre-bundle'], stylusBuildTask(TMP_ROOT, TM
  *
  * TODO: resolve error of .pipe (Unresolved function or method)
  */
-gulp.task(':ng2-template:pre:bundle', [':styl:pre-bundle'], () => {
+gulp.task(':ng2-template:pre-bundle', [':styl:pre-bundle'], () => {
   return gulp.src(join(TMP_ROOT, '**/*.ts'))
     .pipe<any>(inlineNg2Template({
       base: 'tmp',
@@ -100,7 +101,7 @@ gulp.task(':ng2-template:pre:bundle', [':styl:pre-bundle'], () => {
  * Compile ts files injected html and css templates.
  * Without source-map, uglify files.
  */
-gulp.task(':ts:pre:bundle', [':ng2-template:pre:bundle'], () => {
+gulp.task(':tsc:pre-bundle', [':ng2-template:pre-bundle'], () => {
   const tsConfigPath = join(TMP_ROOT, 'tsconfig.json');
 
   // Start Transpiling with tsconfig
@@ -120,7 +121,7 @@ gulp.task(':ts:pre:bundle', [':ng2-template:pre:bundle'], () => {
 /**
  * bundle for system.js
  */
-gulp.task('bundle:app', [':ts:pre:bundle'], () => {
+gulp.task(':bundle:app', [':tsc:pre-bundle'], () => {
   const builder = new systemjsBuilder(PROJECT_ROOT, 'systemjs.config.js');
   const src = join(DIST_ROOT, 'main.js');
   const dest = join(DIST_ROOT, 'app.js');
@@ -131,8 +132,8 @@ gulp.task('bundle:app', [':ts:pre:bundle'], () => {
   };
 
   return builder.bundle(src, dest, config)
-    .then(() => gutil.log(gutil.colors.green('bundle:app Complete!')))
-    .catch(e => gutil.log(gutil.colors.green('bundle:app Failed'), e));
+    .then(() => gutil.log(gutil.colors.green(':bundle:app Complete!')))
+    .catch(e => gutil.log(gutil.colors.green(':bundle:app Failed'), e));
 });
 
 
@@ -166,10 +167,10 @@ gulp.task(':html:production', () => {
 gulp.task('bundle', () => {
   runSequence(
     ':clean:pre-bundle',
-    'bundle:app',
-    'bundle:dependencies',
-    ':html:production',
+    ':bundle:app',
+    ':bundle:dependencies',
     ':bundle:css',
-    ':clean:post-bundle'
+    ':clean:post-bundle',
+    ':html:production',
   );
 });
