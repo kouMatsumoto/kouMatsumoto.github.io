@@ -3,7 +3,7 @@ import {BrowserModule}  from '@angular/platform-browser';
 import {MaterialModule} from '@angular/material';
 
 import {AppComponent} from './app.component';
-import {MyHeader} from './header/index';
+import {MyHeaderComponent} from './header/index';
 import {MyProfileContents} from './contents/profile-contents';
 import {MyDevelopmentContents} from './contents/development-contents';
 
@@ -15,7 +15,7 @@ import {MyDevelopmentContents} from './contents/development-contents';
   ],
   declarations: [
     AppComponent,
-    MyHeader,
+    MyHeaderComponent,
     MyProfileContents,
     MyDevelopmentContents
   ],
