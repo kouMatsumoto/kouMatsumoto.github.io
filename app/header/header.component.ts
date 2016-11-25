@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
   templateUrl: './header.html',
   styleUrls: ['./header.css']
 })
-export class MyHeader {
+export class MyHeaderComponent {
   title = 'kouMatsumoto.github.io';
   avatarSrc = '/images/avatar.png';
 }
