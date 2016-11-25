@@ -1,12 +1,9 @@
 // #docregion
 module.exports = function(config) {
 
-  const appBase    = 'dist/';       // transpiled app JS and map files
-  const appSrcBase = 'app/';       // app source TS files
-  const appAssets  = 'base/dist/'; // component assets fetched by Angular's compiler
-
-  const testBase    = 'dist/';       // transpiled test JS and map files
-  const testSrcBase = 'app/';       // test source TS files
+  const transpiledAppDir = 'dist/';  // transpiled app and test, and map JS files
+  const tsSrcDir = 'app/';         // app and test source TS files
+  const appAssets = 'base/dist/'; // component assets fetched by Angular's compiler
 
   config.set({
     basePath: '',
@@ -26,6 +23,7 @@ module.exports = function(config) {
         flags: ['--no-sandbox']
       }
     },
+
     files: [
       // System.js for module loading
       'node_modules/systemjs/dist/system.src.js',
@@ -57,20 +55,20 @@ module.exports = function(config) {
       'karma-test-shim.js',
 
       // transpiled application & spec code paths loaded via module imports
-      { pattern: appBase + '**/*.js', included: false, watched: true },
-      { pattern: testBase + '**/*.js', included: false, watched: true },
+      { pattern: transpiledAppDir + '**/*.js', included: false, watched: true },
+      { pattern: transpiledAppDir + '**/*.js', included: false, watched: true },
 
 
       // Asset (HTML & CSS) paths loaded via Angular's component compiler
       // (these paths need to be rewritten, see proxies section)
-      { pattern: appBase + '**/*.html', included: false, watched: true },
-      { pattern: appBase + '**/*.css', included: false, watched: true },
+      { pattern: transpiledAppDir + '**/*.html', included: false, watched: true },
+      { pattern: transpiledAppDir + '**/*.css', included: false, watched: true },
 
       // Paths for debugging with source maps in dev tools
-      { pattern: appSrcBase + '**/*.ts', included: false, watched: false },
-      { pattern: appBase + '**/*.js.map', included: false, watched: false },
-      { pattern: testSrcBase + '**/*.ts', included: false, watched: false },
-      { pattern: testBase + '**/*.js.map', included: false, watched: false }
+      { pattern: tsSrcDir + '**/*.ts', included: false, watched: false },
+      { pattern: transpiledAppDir + '**/*.js.map', included: false, watched: false },
+      { pattern: tsSrcDir + '**/*.ts', included: false, watched: false },
+      { pattern: transpiledAppDir + '**/*.js.map', included: false, watched: false }
     ],
 
     // Proxied base paths for loading assets
@@ -99,6 +97,6 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['Chrome'],
-    singleRun: true
+    singleRun: false
   })
 };

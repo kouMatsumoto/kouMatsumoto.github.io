@@ -23,7 +23,7 @@ function isBuiltFile(path) {
   return isJsFile(path) && (path.substr(0, builtPath.length) == builtPath);
 }
 
-const allSpecFiles = Object.keys(window.__karma__.files)
+const allSpecFiles = Object.keys(__karma__.files)
   .filter(isSpecFile)
   .filter(isBuiltFile);
 
@@ -75,7 +75,7 @@ function initTestBed(){
       coreTesting.TestBed.initTestEnvironment(
         browserTesting.BrowserDynamicTestingModule,
         browserTesting.platformBrowserDynamicTesting());
-    })
+    });
 }
 
 // Import all spec files and start karma
@@ -85,5 +85,5 @@ function initTesting () {
       return System.import(moduleName);
     })
   )
-    .then(__karma__.start, __karma__.error);
+    .then(window.__karma__.start, window.__karma__.error);
 }
