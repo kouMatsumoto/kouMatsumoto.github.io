@@ -28,6 +28,7 @@ const allSpecFiles = Object.keys(__karma__.files)
   .filter(isBuiltFile);
 
 System.config({
+  // Override baseURL of systemjs.config.js (karma serves files at localhost:PORT/base/ )
   baseURL: 'base',
   // Extend usual application package list with test folder
   packages: { 'testing': { main: 'index.js', defaultExtension: 'js' } },
