@@ -68,6 +68,9 @@ module.exports = function(config) {
       { pattern: transpiledAppDir + '**/*.html', included: false, watched: true },
       { pattern: transpiledAppDir + '**/*.css', included: false, watched: true },
 
+      // Assets of images
+      { pattern: 'images/**/*', included: false, watched: false },
+
       // Paths for debugging with source maps in dev tools
       { pattern: tsSrcDir + '**/*.ts', included: false, watched: false },
       { pattern: transpiledAppDir + '**/*.js.map', included: false, watched: false },
@@ -78,7 +81,8 @@ module.exports = function(config) {
     // Proxied base paths for loading assets
     proxies: {
       // required for component assets fetched by Angular's compiler
-      "/app/": appAssets
+      "/app/": appAssets,
+      "/images/": '/base/images/'
     },
 
     exclude: [],
