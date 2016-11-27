@@ -1,4 +1,5 @@
 @import '../style/_variables';
+@import '../style/_layout.styl';
 
 // a row of sns icon links
 $top-row-height = 32px;
@@ -16,12 +17,10 @@ header {
 
 // this div is flex container
 .top {
+  flex-container(row, flex-end, center);
   $padding = 2px;
-  align-items: center;
   background-color: $my-primary-color-darken;
-  display: flex;
   height: $top-row-height;
-  justify-content: flex-end;
   padding: $padding $padding * 4;
   width: 100%;
 
@@ -34,12 +33,10 @@ header {
 }
 
 .bot {
-  align-items: center;
+  flex-container(row, flex-start, center);
   background: #673ab7 no-repeat;
   background-size: cover;
-  display: flex;
   height: $bot-row-height;
-  justify-content: flex-start;
   padding: 16px 24px;
   width: 100%;
 }
@@ -62,14 +59,11 @@ img {
 }
 
 
-
 // In width 960px
 @media (max-width: $sm) {
   .bot {
-    align-items: flex-start;
-    flex-direction: column;
+    flex-container(column, center, flex-start);
     height: $bot-row-height-sm;
-    justify-content: center;
   }
 
   h1 {
