@@ -1,13 +1,7 @@
 <header>
   <div class="top">
-    <a href="https://twitter.com/kou_matsumot0" target="_blank">
-      <img src="/images/twitter.png" alt="twitter">
-    </a>
-    <a href="https://www.facebook.com/matsumoto.kou" target="_blank">
-      <img src="/images/facebook.png" alt="facebook">
-    </a>
-    <a href="https://github.com/kouMatsumoto" target="_blank">
-      <img src="/images/github.png" alt="github">
+    <a *ngFor="let item of snsLinks" href="item.href" target="_blank">
+      <img [src]="item.src" alt="item.name">
     </a>
   </div>
   <div class="bot">
