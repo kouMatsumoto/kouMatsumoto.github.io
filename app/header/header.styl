@@ -1,4 +1,12 @@
 @import '../style/_variables';
+@import '../style/_layout.styl';
+
+// a row of sns icon links
+$top-row-height = 32px;
+// a row of main title
+$bot-row-height = 192px;
+$bot-row-height-sm = 160px;
+
 
 header {
   box-sizing: border-box;
@@ -9,18 +17,15 @@ header {
 
 // this div is flex container
 .top {
-  $height = 32px;
+  flex-container(row, flex-end, center);
   $padding = 2px;
-  align-items: center;
   background-color: $my-primary-color-darken;
-  display: flex;
-  height: $height;
-  justify-content: flex-end;
+  height: $top-row-height;
   padding: $padding $padding * 4;
   width: 100%;
 
   img {
-    $size = $height - $padding * 2;
+    $size = $top-row-height - $padding * 2;
     height: $size;
     margin-left: 8px;
     width: $size;
@@ -28,12 +33,10 @@ header {
 }
 
 .bot {
-  align-items: center;
+  flex-container(row, flex-start, center);
   background: #673ab7 no-repeat;
   background-size: cover;
-  display: flex;
-  height: 192px;
-  justify-content: flex-start;
+  height: $bot-row-height;
   padding: 16px 24px;
   width: 100%;
 }
@@ -47,8 +50,29 @@ h1 {
   padding: 0 16px;
 }
 
+// Top main avatar
 img {
   border-radius: 50%;
+  flex: 0 0 auto;
   height: 72px;
   width: 72px;
+}
+
+
+// In width 960px
+@media (max-width: $sm) {
+  .bot {
+    flex-container(column, center, flex-start);
+    height: $bot-row-height-sm;
+  }
+
+  h1 {
+    margin: 8px 0;
+    padding: 0;
+  }
+
+  img {
+    height: 64px;
+    width: 64px;
+  }
 }

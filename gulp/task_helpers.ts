@@ -108,6 +108,7 @@ export function serverTask(streamCallback: (stream: any) => void = null) {
   return () => {
     const stream = gulp.src(PROJECT_ROOT)
       .pipe(gulpServer({
+        host: '0.0.0.0',
         livereload: {
           enable: true,
           filter: (filename, cb) => {

@@ -1,0 +1,17 @@
+// Mixins of layout control
+
+// flex-container styles set
+flex-container($direction = row, $justify-contents = flex-start, $align-items = stretch, $wrap = nowrap) {
+  align-items: $align-items;
+  display: flex;
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+  justify-content: $justify-contents;
+}
+
+// flex-item style set
+flex($grow = 0, $shrink = 0, $basis = auto, $align-self = auto, $order = 0) {
+  flex: $grow $shrink $basis;
+  align-self: $align-self;
+  order: $order;
+}
