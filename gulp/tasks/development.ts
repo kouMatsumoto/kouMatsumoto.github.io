@@ -8,6 +8,9 @@ import {join} from 'path';
 import {serverTask, tsBuildTask, copyTask, stylusBuildTask} from '../task_helpers';
 import {DIST_ROOT, APP_ROOT, PROJECT_ROOT} from '../constants';
 
+// lack of types
+const runSequence = require('run-sequence');
+
 
 
 gulp.task(':build:styl', stylusBuildTask(APP_ROOT, DIST_ROOT));
@@ -35,3 +38,15 @@ gulp.task('watch:app', () => {
 
 
 gulp.task('serve:app', ['build:app', 'watch:app'], serverTask());
+
+
+/**
+ * Used in development
+ */
+gulp.task('dev:app', ['build:app'], () => {
+  runSequence([
+    'serve:app',
+    ':test:unit',
+    'watch:app'
+  ]);
+});
