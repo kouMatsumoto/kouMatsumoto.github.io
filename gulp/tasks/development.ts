@@ -46,7 +46,7 @@ gulp.task('serve:app', ['build:app', 'watch:app'], serverTask());
 gulp.task('dev:app', ['build:app'], () => {
   runSequence([
     'serve:app',
-    ':test:app',
+    ':test:unit',
     'watch:app'
   ]);
 });

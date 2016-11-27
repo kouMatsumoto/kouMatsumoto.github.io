@@ -12,6 +12,6 @@ import {PROJECT_ROOT} from '../constants';
  * This task is assuming that TS files are already transpiled. (don't run this before ts task.)
  * This task is dependency of TODO
  */
-gulp.task(':test:app', (done) => {
+gulp.task(':test:unit', (done) => {
   new Server({configFile: join(PROJECT_ROOT, 'karma.conf.js')}, done).start();
 });
