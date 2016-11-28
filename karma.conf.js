@@ -1,12 +1,12 @@
 // #docregion
 module.exports = function(config) {
 
-  const transpiledAppDir = 'dist/';  // transpiled app and test, and map JS files
+  const transpiledAppDir = 'app/';  // transpiled app and test, and map JS files
   const tsSrcDir = 'app/';         // app and test source TS files
 
   // By default karma serves assets at http://localhost:[PORT]/base/
   // See http://karma-runner.github.io/1.0/config/files.html
-  const appAssets = 'base/dist/'; // component assets fetched by Angular's compiler
+  const appAssets = 'base/app/'; // component assets fetched by Angular's compiler
 
 
   config.set({

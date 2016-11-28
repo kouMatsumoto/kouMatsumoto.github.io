@@ -16,6 +16,9 @@ npm-debug.log
 
 # In develop, ignore compiled files
 /dist
+/app/**/*.js
+/app/**/*.css
+/app/**/*.map
 
 # Files in development
 /bundles
