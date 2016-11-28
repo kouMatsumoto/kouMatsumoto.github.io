@@ -49,6 +49,7 @@
     "@types/gulp-uglify": "0.0.29",
     "@types/gulp-util": "^3.0.29",
     "@types/jasmine": "^2.5.35",
+    "@types/karma": "^0.13.33",
     "@types/node": "^6.0.45",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
