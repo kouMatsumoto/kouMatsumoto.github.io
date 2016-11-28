@@ -15,42 +15,13 @@ const runSequence = require('run-sequence');
 
 
 
-gulp.task(':build:styl', stylusBuildTask(APP_ROOT, DIST_ROOT));
-gulp.task(':build:ts', tsBuildTask(APP_ROOT));
-gulp.task(':copy:html', copyTask(join(APP_ROOT, '**/*.html'), DIST_ROOT));
-
-
 /**
  * Copy production.index.html to PROJECT_ROOT as index.html
  */
-gulp.task(':html:development', () => {
+gulp.task(':html:dev', () => {
   return gulp.src(join(APP_ROOT, 'development.index.html'))
     .pipe(gulpRename('index.html'))
     .pipe(gulp.dest(PROJECT_ROOT));
-});
-
-
-gulp.task('build:app', [':html:development', ':build:ts', ':build:styl', ':copy:html']);
-
-gulp.task('watch:app', () => {
-  gulp.watch(join(APP_ROOT, '**/*.styl'), [':build:styl']);
-  gulp.watch(join(APP_ROOT, '**/*.ts'), [':build:ts']);
-  gulp.watch(join(APP_ROOT, '**/*.html'), [':copy:html']);
-});
-
-
-gulp.task('serve:app', ['build:app', 'watch:app'], serverTask());
-
-
-/**
- * Used in development
- */
-gulp.task('dev:app', ['build:app'], () => {
-  runSequence([
-    'serve:app',
-    ':test:unit',
-    'watch:app'
-  ]);
 });
 
 
@@ -70,3 +41,36 @@ gulp.task('styl:app:dev', () => {
  * Task to transpile TS files in development
  */
 gulp.task('ts:app:dev', tsBuildTask(APP_ROOT));
+
+
+/**
+ * Task to prepare app to serve in development
+ */
+gulp.task('build:app:dev', [':html:dev', 'ts:app:dev', 'styl:app:dev']);
+
+
+/**
+ * Task to watch files to transpile
+ */
+gulp.task('watch:app:dev', () => {
+  gulp.watch(join(APP_ROOT, '**/*.ts'), ['ts:app:dev']);
+  gulp.watch(join(APP_ROOT, '**/*.styl'), ['styl:app:dev']);
+});
+
+
+/**
+ * Task to serve app in development
+ */
+gulp.task('serve:app:dev', serverTask());
+
+
+/**
+ * Task to develop app
+ */
+gulp.task('dev:app', ['build:app:dev'], () => {
+  runSequence([
+    'serve:app:dev',
+    ':test:unit',
+    'watch:app:dev'
+  ]);
+});
