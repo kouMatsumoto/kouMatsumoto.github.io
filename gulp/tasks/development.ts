@@ -55,7 +55,7 @@ gulp.task('dev:app', ['build:app'], () => {
 
 
 /**
- * Task to transpile stylus for development
+ * Task to transpile stylus files in development
  */
 gulp.task('styl:app:dev', () => {
   return gulp.src([join(APP_ROOT, '**/*.styl')])
@@ -64,3 +64,9 @@ gulp.task('styl:app:dev', () => {
     .pipe(gulpSourcemaps.write('.'))
     .pipe(gulp.dest(APP_ROOT));
 });
+
+
+/**
+ * Task to transpile TS files in development
+ */
+gulp.task('ts:app:dev', tsBuildTask(APP_ROOT));
