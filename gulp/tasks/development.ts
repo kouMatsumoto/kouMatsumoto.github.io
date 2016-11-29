@@ -5,11 +5,14 @@
 import * as gulp from 'gulp';
 import * as gulpRename from 'gulp-rename';
 import * as gulpSourcemaps from 'gulp-sourcemaps';
+import * as gulpTs from 'gulp-typescript';
+import * as gutil from 'gulp-util';
 import {join} from 'path';
-import {serverTask, tsBuildTask, copyTask, stylusBuildTask} from '../task_helpers';
-import {DIST_ROOT, APP_ROOT, PROJECT_ROOT} from '../constants';
+import {serverTask, tsBuildTask} from '../task_helpers';
+import {APP_ROOT, PROJECT_ROOT} from '../constants';
 
 // lack of types
+const inlineNg2Template = require('gulp-inline-ng2-template');
 const gulpStylus = require('gulp-stylus');
 const runSequence = require('run-sequence');
 
@@ -41,6 +44,29 @@ gulp.task('styl:app:dev', () => {
  * Task to transpile TS files in development
  */
 gulp.task('ts:app:dev', tsBuildTask(APP_ROOT));
+
+
+/**
+ * Task to transpile TS injected html, css
+ * Note: ng2-inline-template don't support sourcemaps
+ */
+gulp.task('ts:app:injected', () => {
+  const tsConfigPath = join(APP_ROOT, 'tsconfig.json');
+
+  // Start Transpiling with tsconfig
+  gutil.log(gutil.colors.green(`Start tsc with ${tsConfigPath}`));
+  const tsProject = gulpTs.createProject(tsConfigPath, {
+    typescript: require('typescript')
+  });
+
+  return tsProject.src()
+    .pipe(inlineNg2Template({
+      base: '/app',
+      useRelativePaths: true
+    }))
+    .pipe(gulpTs(tsProject))
+    .pipe(gulp.dest(APP_ROOT));
+});
 
 
 /**
