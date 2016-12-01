@@ -22,11 +22,15 @@
       '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
       '@angular/material': 'npm:@angular/material',
+
       // other libraries
       'rxjs':                      'npm:rxjs',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
       'zone.js': 'npm:zone.js',
-      'reflect-metadata': 'npm:reflect-metadata'
+      'reflect-metadata': 'npm:reflect-metadata',
+
+      // Systemjs Hot Reloader
+      'systemjs-hot-reloader': 'npm:systemjs-hot-reloader/hot-reloader.js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {

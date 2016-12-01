@@ -17,5 +17,11 @@
   <script src="/node_modules/reflect-metadata/Reflect.js"></script>
   <script src="/node_modules/systemjs/dist/system.src.js"></script>
   <script src="/systemjs.config.js"></script>
-  <script> System.import('app/main').catch(function(e){ window.console.error(e); }); </script>
+  <script>
+    System.trace = true;
+    System.import('systemjs-hot-reloader')
+      .then((HotReloader) => new HotReloader.default('http://localhost:9089'))
+      .then(() => System.import('app/main').catch(function(e){ window.console.error(e); }));
+
+  </script>
 </html>
